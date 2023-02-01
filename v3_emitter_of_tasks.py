@@ -19,9 +19,6 @@ import time
 # Input "True" or "False"
 show_offer = "False"
 
-# define the input file
-input_file = "tasks.csv"
-
 def offer_rabbitmq_admin_site():
     """Offer to open the RabbitMQ Admin website"""
     ans = input("Would you like to monitor RabbitMQ queues? y or n ")
@@ -63,13 +60,15 @@ def send_message(host: str, queue_name: str, message: str):
         # close the connection to the server
         conn.close()
 
+def send_csv(input_file):
+    """
+    Creates a message for each row of csv and sends it to the queue.
+    This process runs and finishes.
 
-# Standard Python idiom to indicate main program entry point
-# This allows us to import this module and use its functions
-# without executing the code below.
-# If this is the program being run, then execute the code below
-if __name__ == "__main__":  
-    # show the offer to open Admin Site if show_offer is set to true, else open automatically
+    Parameters:
+        input_file: The csv file you want to send
+    """
+# show the offer to open Admin Site if show_offer is set to true, else open automatically
     if show_offer == "True":
         offer_rabbitmq_admin_site()
     else:
@@ -89,3 +88,11 @@ if __name__ == "__main__":
         time.sleep(3)
     # close the file
     open_file.close()
+
+
+# Standard Python idiom to indicate main program entry point
+# This allows us to import this module and use its functions
+# without executing the code below.
+# If this is the program being run, then execute the code below
+if __name__ == "__main__":  
+    send_csv("tasks.csv")
